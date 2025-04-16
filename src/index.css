@@ -1,0 +1,228 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  background-color: #FAFAFA;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+
+.konvajs-content {
+  background: linear-gradient(45deg, #f8f9fa 25%, transparent 25%),
+              linear-gradient(-45deg, #f8f9fa 25%, transparent 25%),
+              linear-gradient(45deg, transparent 75%, #f8f9fa 75%),
+              linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+/* Cursor styles for different tools */
+[data-tool="pencil"] .konvajs-content {
+  /* Cursor is now handled dynamically in App.tsx */
+}
+
+[data-tool="marker"] .konvajs-content canvas {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512" fill="%23FF3B7B"><path d="M421.33 258.34c0-5.891-2.172-11.78-6.516-16.12l-16.12-16.12c-4.344-4.344-10.23-6.516-16.12-6.516c-5.891 0-11.78 2.172-16.12 6.516L260.79 331.73c-2.172 2.172-4.688 3.281-7.547 3.281c-2.859 0-5.375-1.109-7.547-3.281L151.21 237.24c-2.172-2.172-3.281-4.688-3.281-7.547c0-2.859 1.109-5.375 3.281-7.547L256.84 116.52c4.344-4.344 6.516-10.23 6.516-16.12c0-5.891-2.172-11.78-6.516-16.12L240.72 68.16c-4.344-4.344-10.23-6.516-16.12-6.516c-5.891 0-11.78 2.172-16.12 6.516L90.67 185.97c-8.688 8.688-13.03 19.26-13.03 31.55c0 12.29 4.344 22.86 13.03 31.55l94.48 94.48c8.688 8.688 19.26 13.03 31.55 13.03c12.29 0 22.86-4.344 31.55-13.03l117.81-117.81C419.16 270.12 421.33 264.23 421.33 258.34z"/></svg>') 0 24, crosshair !important;
+}
+
+[data-tool="eraser"] .konvajs-content canvas {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23666666"><path d="M16.571 3.428c-.571-.571-1.428-.571-2 0L3.428 14.571c-.571.571-.571 1.428 0 2l4 4c.571.571 1.428.571 2 0L20.571 9.428c.571-.571.571-1.428 0-2l-4-4zM4.571 15.428l10-10 4 4-10 10-4-4z"/></svg>') 0 24, crosshair !important;
+}
+
+[data-tool="pan"] .konvajs-content canvas {
+  cursor: grab !important;
+}
+
+[data-tool="pan"].dragging .konvajs-content canvas {
+  cursor: grabbing !important;
+}
+
+/* Add data-tool attribute to Stage */
+.konvajs-content canvas {
+  transition: cursor 0.2s ease;
+}
+
+.MuiPaper-root {
+  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.97) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.MuiPaper-root:hover {
+  background-color: rgba(255, 246, 250, 0.97) !important;
+  border: 1px solid rgba(255, 59, 123, 0.1);
+}
+
+.toolbar {
+  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.MuiIconButton-root {
+  border-radius: 12px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  color: #666 !important;
+  padding: 6px !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.MuiIconButton-root::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 59, 123, 0.1),
+    rgba(0, 194, 255, 0.1)
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease-out, height 0.3s ease-out;
+}
+
+.MuiIconButton-root:hover::before {
+  width: 150%;
+  height: 150%;
+}
+
+.MuiIconButton-root svg {
+  width: 18px !important;
+  height: 18px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+  z-index: 1;
+}
+
+.MuiIconButton-root:hover {
+  transform: translateY(-2px) !important;
+  color: #FF3B7B !important;
+}
+
+.MuiIconButton-root:hover svg {
+  transform: rotate(-8deg) scale(1.2);
+}
+
+.MuiIconButton-root:active {
+  transform: translateY(0) !important;
+}
+
+.MuiIconButton-root:active svg {
+  transform: rotate(0) scale(1);
+}
+
+.MuiIconButton-root.active {
+  color: #FF3B7B !important;
+}
+
+.MuiIconButton-root:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+.MuiIconButton-root:disabled:hover::before {
+  width: 0;
+  height: 0;
+}
+
+.MuiDivider-root {
+  margin: 6px 0 !important;
+  background: linear-gradient(to right,
+    rgba(255, 59, 123, 0.1),
+    rgba(0, 194, 255, 0.1)
+  ) !important;
+  transition: opacity 0.3s ease-in-out !important;
+  height: 2px !important;
+}
+
+.MuiPaper-root:hover .MuiDivider-root {
+  opacity: 0.8;
+}
+
+.MuiTooltip-tooltip {
+  font-size: 0.75rem !important;
+  padding: 6px 10px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, 
+    rgba(255, 59, 123, 0.95),
+    rgba(0, 194, 255, 0.95)
+  ) !important;
+  backdrop-filter: blur(4px) !important;
+  box-shadow: 0 4px 12px rgba(255, 59, 123, 0.2) !important;
+  color: white !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.MuiTooltip-tooltip:hover {
+  transform: scale(1.05);
+}
+
+.brush-size-popup {
+  animation: fadeIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.brush-size-option {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.brush-size-option:hover {
+  transform: scale(1.1);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-16px) translateY(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(-50%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
