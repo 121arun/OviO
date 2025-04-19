@@ -1,6 +1,6 @@
 # OviO - Interactive Drawing Application
 
-OviO is a modern, web-based drawing application built with React and Konva that offers an intuitive sketching experience with a clean, minimalist interface.
+OviO is a modern web-based drawing canvas that offers an intuitive sketching experience for doodling, visualizing ideas, or simply drawing—all within a clean, minimalist interface.
 
 ![OviO Drawing Application](https://raw.githubusercontent.com/121arun/ovio/refs/heads/main/public/image.png)
 
